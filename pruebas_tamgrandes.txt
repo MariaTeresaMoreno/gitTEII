@@ -6,3 +6,7 @@ sys 0m0.016s
 real0m24.289s
 user0m24.184s
 sys0m0.012s 
+N=300 
+real0m13.743s
+user0m13.664s
+sys0m0.012s 
