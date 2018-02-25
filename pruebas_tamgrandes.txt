@@ -10,3 +10,8 @@ N=300
 real0m13.743s
 user0m13.664s
 sys0m0.012s 
+N=200
+real0m7.874s
+user0m7.844s
+sys0m0.000s
+
