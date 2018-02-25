@@ -1,0 +1,4 @@
+N=500
+real0m40.064s
+ user 0m39.896s 
+sys 0m0.016s
