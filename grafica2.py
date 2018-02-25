@@ -15,6 +15,6 @@ ax.set_ylabel("Tiempo(s)")
 plt.title("Tamaños de entrada iguales")
 
 plt.plot(datos, color ='g', label = "Tiempos")
-plt.legend(loc="upper left")
+plt.legend(loc="upper right")
 
 plt.show()
