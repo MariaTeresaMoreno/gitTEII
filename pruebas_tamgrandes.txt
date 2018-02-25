@@ -2,3 +2,7 @@ N=500
 real0m40.064s
  user 0m39.896s 
 sys 0m0.016s
+ N=400 
+real0m24.289s
+user0m24.184s
+sys0m0.012s 
