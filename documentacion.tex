@@ -3,65 +3,35 @@
 % Esto es un comentario
 
 \usepackage[utf8]{inputenc}
-\usepackage[english]{babel}
+\usepackage[spanish,activeacute]{babel}
 \usepackage{verbatim}
 \usepackage{color}
-\usepackage[margin=3cm]{geometry}
+\usepackage[margin=2.5cm]{geometry}
 \usepackage{graphicx}
 \usepackage{lipsum}
 \usepackage{times}
 \usepackage{listings}
 \usepackage{import}
 \usepackage[normalem]{ulem}
-
-
-
 \usepackage[hidelinks]{hyperref}
+
+\newcommand{\bold}[1]{\textbf{#1}}
+
+\title{Estudio del algoritmo matem\'atico Jacobi.}
+
+
 
 \begin{document}
 
-\begin{titlepage}
-
-\begin{center}
-\vspace*{-1in}
+\maketitle
 \begin{figure}[htb]
 \begin{center}
-\includegraphics[width=8cm]{./img/UM.png}
+\includegraphics[width=8cm]{doc/img/uni-murcia.png}
 \end{center}
 \end{figure}
 
-FACULTAD DE INFORMÁTICA \\
-\vspace*{0.15in}
-DEPARTAMENTO DE INFORMÁTICA Y SISTEMAS \\
-\vspace*{0.6in}
-\begin{large}
-Autor: Cristina Villa Torrano \\
-\end{large}
-\vspace*{0.2in}
-\begin{Large}
-\textbf{ALGORITMOS GENÉTICOS PARA EL USO DE HERRAMIENTAS CIENTÍFICAS} \\
-\end{Large}
-\vspace*{0.3in}
-\vspace*{0.3in}
-\rule{80mm}{0.1mm}\\
-\vspace*{0.1in}
-\begin{large}
-Supervisado por: 
-Alberto Ruiz
-\end{large}
-\end{center}
+\author{Mar'ia Teresa Moreno Boluda}
 
-\end{titlepage}
-
-
-
-%\title{Hacia el uso de herramientas científicas}
-%\author{Cristina Villa Torrano}
-%\date{}
-
-
-
-%\maketitle
 
 \begin{abstract}
 
@@ -180,7 +150,7 @@ El código es el siguiente:
 \end{minipage} 
 }    
 
-\showprog{cruce.cpp}\label{img:cruce}
+%\showprog{cruce.cpp}\label{img:cruce}
  
 \subsection{Operacion de mutación}\label{des:mutacion}
 
@@ -195,15 +165,15 @@ Si la probabilidad de mutación es menor o igual a 0, no se muta ningún individ
 	El código sería el siguiente:
 
 
-\showprog{mutacion1.cpp}\label{img:mut1}
+%\showprog{mutacion1.cpp}\label{img:mut1}
 
-\showprog{mutacion2.cpp}\label{img:mut2}
+%\showprog{mutacion2.cpp}\label{img:mut2}
 
 
 
 	Como código auxiliar tenemos:
 
-	\showprog{check.cpp}\label{img:check}
+%	\showprog{check.cpp}\label{img:check}
 
 \subsection{Condición de parada}\label{des:parada}
 
@@ -234,7 +204,7 @@ Los resultados obtenidos con este script han sido los utilizados para hacer uso 
 
 \begin{figure}[h]
 \begin{center}
-\includegraphics[width=0.5\textwidth]{img/datosRuleta.png}
+%\includegraphics[width=0.5\textwidth]{img/datosRuleta.png}
 \end{center}
 \caption{Selector Ruleta}
 \label{fig:ruleta}
@@ -243,7 +213,7 @@ Los resultados obtenidos con este script han sido los utilizados para hacer uso 
 
 \begin{figure}[h]
 \begin{center}
-\includegraphics[width=0.5\textwidth]{img/datosTorneo.png}
+%\includegraphics[width=0.5\textwidth]{img/datosTorneo.png}
 \end{center}
 \caption{Selector Torneo}
 \label{fig:torneo}
@@ -255,7 +225,7 @@ Como se puede comprobar, existe un mayor número de soluciones con el selector T
 
 \begin{figure}[h]
 \begin{center}
-\includegraphics[width=0.5\textwidth]{img/pob100.png}
+%\includegraphics[width=0.5\textwidth]{img/pob100.png}
 \end{center}
 \caption{Población de 100 individuos}
 \label{fig:pob100}
@@ -263,7 +233,7 @@ Como se puede comprobar, existe un mayor número de soluciones con el selector T
 
 \begin{figure}[h]
 \begin{center}
-\includegraphics[width=0.5\textwidth]{img/pon150.png}
+%\includegraphics[width=0.5\textwidth]{img/pon150.png}
 \end{center}
 \caption{Población de 150 individuos}
 \label{fig:pob150}
@@ -276,7 +246,7 @@ En esta ocasión se puede comprobar que existe un mayor número de soluciones pa
 
 \begin{figure}[t!]
 \begin{center}
-\includegraphics[width=0.5\textwidth]{img/cruce085.png}
+%\includegraphics[width=0.5\textwidth]{img/cruce085.png}
 \end{center}
 \caption{Probabilidad de cruce 0.85}
 \label{fig:cruce085}
@@ -284,7 +254,7 @@ En esta ocasión se puede comprobar que existe un mayor número de soluciones pa
 
 \begin{figure}[t!]
 \begin{center}
-\includegraphics[width=0.5\textwidth]{img/cruce08.png}
+%\includegraphics[width=0.5\textwidth]{img/cruce08.png}
 \end{center}
 \caption{Probabilidad de cruce 0.8}
 \label{fig:cruce08}
@@ -292,7 +262,7 @@ En esta ocasión se puede comprobar que existe un mayor número de soluciones pa
 
 \begin{figure}[t!]
 \begin{center}
-\includegraphics[width=0.5\textwidth]{img/cruce09.png}
+%\includegraphics[width=0.5\textwidth]{img/cruce09.png}
 \end{center}
 \caption{Probabilidad de cruce 0.9}
 \label{fig:cruce09}
@@ -300,7 +270,7 @@ En esta ocasión se puede comprobar que existe un mayor número de soluciones pa
 
 \begin{figure}[t!]
 \begin{center}
-\includegraphics[width=0.5\textwidth]{img/cruce095.png}
+%\includegraphics[width=0.5\textwidth]{img/cruce095.png}
 \end{center}
 \caption{Probabilidad de cruce 0.95}
 \label{fig:cruce095}
@@ -312,7 +282,7 @@ Como puede verse, la probabilidad de cruce que mayor número de soluciones propo
 
 \begin{figure}[h]
 \begin{center}
-\includegraphics[width=0.5\textwidth]{img/muta001.png}
+%\includegraphics[width=0.5\textwidth]{img/muta001.png}
 \end{center}
 \caption{Probabilidad de mutación 0.01}
 \label{fig:muta001}
@@ -320,7 +290,7 @@ Como puede verse, la probabilidad de cruce que mayor número de soluciones propo
 
 \begin{figure}[h]
 \begin{center}
-\includegraphics[width=0.5\textwidth]{img/muta005.png}
+%\includegraphics[width=0.5\textwidth]{img/muta005.png}
 \end{center}
 \caption{Probabilidad de mutación 0.05}
 \label{fig:muta005}
@@ -328,7 +298,7 @@ Como puede verse, la probabilidad de cruce que mayor número de soluciones propo
 
 \begin{figure}[h]
 \begin{center}
-\includegraphics[width=0.5\textwidth]{img/muta01.png}
+%\includegraphics[width=0.5\textwidth]{img/muta01.png}
 \end{center}
 \caption{Probabilidad de mutación 0.1}
 \label{fig:muta01}
@@ -336,7 +306,7 @@ Como puede verse, la probabilidad de cruce que mayor número de soluciones propo
 
 \begin{figure}[h]
 \begin{center}
-\includegraphics[width=0.5\textwidth]{img/muta0125.png}
+%\includegraphics[width=0.5\textwidth]{img/muta0125.png}
 \end{center}
 \caption{Probabilidad de mutación 0.125}
 \label{fig:muta0125}
@@ -344,7 +314,7 @@ Como puede verse, la probabilidad de cruce que mayor número de soluciones propo
 
 \begin{figure}[h]
 \begin{center}
-\includegraphics[width=0.5\textwidth]{img/muta015.png}
+%\includegraphics[width=0.5\textwidth]{img/muta015.png}
 \end{center}
 \caption{Probabilidad de mutación 0.15}
 \label{fig:muta015}
