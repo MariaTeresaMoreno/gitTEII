@@ -1,0 +1,15 @@
+N=400 + mismos valores iniciales
+real0m24.516s
+user0m24.416s
+sys0m0.004s
+
+N=400; valores distintos:
+real0m8.866s
+user0m8.764s
+sys0m0.008s
+
+N=400; distintos valores al anterior
+real0m2.355s
+user0m2.264s
+sys0m0.004s
+
