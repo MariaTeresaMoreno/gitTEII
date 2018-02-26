@@ -1,0 +1,383 @@
+\documentclass[a4,11pt]{article}
+
+% Esto es un comentario
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{verbatim}
+\usepackage{color}
+\usepackage[margin=3cm]{geometry}
+\usepackage{graphicx}
+\usepackage{lipsum}
+\usepackage{times}
+\usepackage{listings}
+\usepackage{import}
+\usepackage[normalem]{ulem}
+
+
+
+\usepackage[hidelinks]{hyperref}
+
+\begin{document}
+
+\begin{titlepage}
+
+\begin{center}
+\vspace*{-1in}
+\begin{figure}[htb]
+\begin{center}
+\includegraphics[width=8cm]{./img/UM.png}
+\end{center}
+\end{figure}
+
+FACULTAD DE INFORMÁTICA \\
+\vspace*{0.15in}
+DEPARTAMENTO DE INFORMÁTICA Y SISTEMAS \\
+\vspace*{0.6in}
+\begin{large}
+Autor: Cristina Villa Torrano \\
+\end{large}
+\vspace*{0.2in}
+\begin{Large}
+\textbf{ALGORITMOS GENÉTICOS PARA EL USO DE HERRAMIENTAS CIENTÍFICAS} \\
+\end{Large}
+\vspace*{0.3in}
+\vspace*{0.3in}
+\rule{80mm}{0.1mm}\\
+\vspace*{0.1in}
+\begin{large}
+Supervisado por: 
+Alberto Ruiz
+\end{large}
+\end{center}
+
+\end{titlepage}
+
+
+
+%\title{Hacia el uso de herramientas científicas}
+%\author{Cristina Villa Torrano}
+%\date{}
+
+
+
+%\maketitle
+
+\begin{abstract}
+
+Gracias al avance de la tecnología, el análisis de datos y el cálculo matemático se ha hecho mucho más sencillo en los últimos años. En el presente documento se tratará un caso de estudio donde se analizará el resultado gracias a las características que ofrece python y sus librerías científicas.
+
+\end{abstract}
+
+\newpage
+\tableofcontents
+\newpage
+
+\section{Introducción}
+
+\indent El caso de estudio elegido para la realización de la práctica ha sido el crear un sistema inteligente que resuelva sudokus. Para conseguirlo, hemos hecho uso del algoritmo genético.
+
+
+Los algoritmos genéticos son algoritmos inspirados en los mecanismos de adaptación de los seres vivos. Se aplican a problemas de búsqueda y optimización y se ejecutan de manera paralela. Este tipo de algoritmos funcionan con un conjunto de individuos (\emph{población de individuos} o \emph{cromosomas}), donde cada individuo representa una posible solución al problema. A su vez, estos cromosomas representan un nivel de adaptación al entorno (\emph{bondad de la solución}) que será lo que haga que sean elegidos para reproducirse.
+
+Basándose en 4 operadores (\emph{selección}, \emph{inicialización}, \emph{cruce} y \emph{mutación}), el algoritmo general es el siguiente:
+
+\begin{enumerate}
+
+\item Creación de una población inicial.
+
+\item Evaluación de la adaptación de los individuos.
+
+\item Selección de un subconjunto de la población.
+
+\item Producción de una nueva generación a partir del subconjunto 
+anterior usando los operadores de cruce y mutación.
+
+\item En caso de no cumplir la condición de parada, volver al paso 2.
+
+\end{enumerate}
+
+    
+La funcionalidad de los operadores genéticos es la siguiente:
+
+\begin{itemize}
+\item Selección: Selecciona k individuos para operar con ellos.
+
+\item Inicialización: Determina cómo se inicializa el genoma (la información relevante al problema) de los individuos. No crea nuevos cromosomas, sino que “rellena” la población con el material genético primordial con el que empezar a evolucionar.
+
+\item Cruce: Mezcla el cromosoma de los dos individuos a cruzar para dar uno nuevo.
+
+\item Mutación: Cambia de manera aleatoria el cromosoma de un nuevo individuo.
+\end{itemize}
+
+ 
+Los elementos a detallar que quedan son los siguientes:
+
+\begin{itemize}
+
+\item Función de adaptación o fitness: Esta función depende del problema y es la que va a decidir qué individuo es el que sobrevive atendiendo a su nivel de adaptación al entorno, es decir, es la que indica cómo de buena es una solución buscando el óptimo. Definida por el programador.
+
+\item Condición de parada: Esta función es la encargada de hacer que el algoritmo pare su ejecución. Definida por el programador.
+
+\end{itemize}
+
+\newpage
+
+\section{Desarrollo}
+
+\subsection{Inicialización del Sudoku}\label{des:init}
+
+Para inicializar el sudoku lo que se hace es crear un array auxiliar donde se colocarán, para cada fila, números del 1 al 9 saltando la posición de los números fijos (al programa tiene como entrada una plantilla con números fijos).
+ 
+Después de esto, se buscan los números fijos correspondientes a la fila actual en el array auxiliar y, si se encuentra, se intercambian los valores de las posiciones para, finalmente, poner el número fijo en su posición correspondiente y que no se repitan valores en una misma fila.
+ 
+Finalmente, se copia toda la fila al genoma que vamos a evaluar.
+
+\subsection{Operadores de selección}\label{des:ops}
+
+\begin{itemize}
+\item Selección por ruleta: Selecciona a un individuo en base a la magnitud de su valor fitness con respecto al del resto de la población. Cuanto más alto sea, más probabilidades tendrá de ser escogido. 
+La probabilidad p de ser escogido estaría marcada por el valor fitness de ese individuo dividido entre la suma de los valores fitness del resto de la población.
+
+
+\item Selección por torneo: Primero selecciona a los dos mejores individuos usando el método de la selección por ruleta y, después de tenerlos, entonces elige al mejor de entre ellos dos atendiendo a su valor fitness también.
+\end{itemize}
+
+\subsection{Operador de cruce}\label{des:cruce}
+
+Se utiliza el cruce por un punto.
+ 
+Se buscan dos puntos (aunque en la realidad viene siendo uno). El primero de ellos de manera aleatoria entre 0 y la longitud de uno de los padres y el otro queda como la longitud del padre escogido menos el primer punto. Esto es así para que cada cruce sea distinto al anterior y haya más variedad.
+ 
+Teniendo ya los dos puntos, lo que se hace es copiar, para el primer hijo, la primera parte del padre 1 y la segunda parte del padre 2 y, para el segundo hijo, la segunda parte del padre 1 y la primera parte del padre 2.
+
+Finalmente, se devuelve el número de cruces que se han hecho.
+
+El código es el siguiente:
+
+\newcommand{\grisclaro}{\color[gray]{0.99}}
+\newcommand{\gris}{\color[gray]{0.9}}
+\newcommand{\grisos}{\color[gray]{0.5}}
+
+\newcommand{\showprog}[1]
+{
+\begin{minipage}{\textwidth}
+\lstinputlisting[language=C++,
+                  frame=single,
+		  backgroundcolor=\grisclaro,
+		  extendedchars=false,
+          inputencoding=utf8,
+		  aboveskip=1eM,
+		  belowskip=1.5eM,
+		  basicstyle=\small,
+		  title=-- #1 --,
+		  xleftmargin=0cm,
+		  xrightmargin=0cm,
+		  columns=flexible,
+		  commentstyle=\itshape\grisos,
+		  stringstyle=\color{red}]
+ {#1}
+\end{minipage} 
+}    
+
+\showprog{cruce.cpp}\label{img:cruce}
+ 
+\subsection{Operacion de mutación}\label{des:mutacion}
+
+Si la probabilidad de mutación es menor o igual a 0, no se muta ningún individuo. En caso contrario, se analiza si el individuo debe mutar con la función \emph{GAFlipCoin}, y, dentro del acierto, se mira si hay que mutar en las filas o en las columnas utilizando la misma función pero con una probabilidad del 50\% para cada una de las opciones.
+
+	Cuando tiene que mutar un valor de la fila, lo que se hace es buscar un número que no sea fijo e intercambiarlo por el de la posición actual que estuvieses analizando.
+
+	En el caso de las columnas es un poco más complejo, ya que lo que se hace es ver si la columna tiene valores repetidos. En caso de tenerlo, se intercambia por un valor que no esté repetido y se arregla la fila que acabamos de cambiar. Si resulta que el valor que estábamos intercambiando era un fijo en la fila, no se puede llevar a cabo la mutación y se tiene que deshacer. De otro modo, la mutación se realiza satisfactoriamente.
+
+	Finalmente, se devuelve el número de mutaciones realizadas.
+
+	El código sería el siguiente:
+
+
+\showprog{mutacion1.cpp}\label{img:mut1}
+
+\showprog{mutacion2.cpp}\label{img:mut2}
+
+
+
+	Como código auxiliar tenemos:
+
+	\showprog{check.cpp}\label{img:check}
+
+\subsection{Condición de parada}\label{des:parada}
+
+Para este problema la condición de parada establecida es la de conseguir un valor \emph{fitness} de 0, es decir, no existen repeticiones en el sudoku que hemos resuelto y, por tanto, es la solución que buscamos, o bien llegar a 12000 generaciones. Esta segunda condición se pone para que el algoritmo no se ejecute de forma infinita en el tiempo en caso de no conseguir una solución.
+
+\subsection{Función fitness}\label{des:fitness}
+
+	En esta versión se utiliza la estructura de genoma ya vista con anterioridad.
+
+	El esquema que se sigue consiste en recorrer las filas y los cuadrantes de una sola pasada (guardando los cuadrantes a tercios) y las columnas por separado.
+
+	Un aspecto a destacar es el uso de la función checkColumn ya dada para la contabilidad de las repeticiones, solo recorriendo la estructura para acumularlas cuando la función devuelve positivo.
+
+	Se podría introducir la comprobación de las columnas dentro de los bucles para las filas y cuadrantes, al igual que también se podría separar los tres casos en sus propios bucles. El orden de ejecución variaría en las constantes (debido a los saltos condicionales), pero a priori no muy significativamente. Sin embargo, si se hiciera de manera separada, se  almacenarían menos estructuras auxiliares y, por tanto, se consumiría menos memoria, aunque en este programa no se hace un uso excesivo de ella.
+
+\newpage
+
+\section{Ajuste del Algoritmo Genético}\label{label}
+
+Para analizar cómo se comporta nuestro programa y tener unas conclusiones acertadas sobre cuáles serían los parámetros para resolver el sudoku de manera correcta, hemos realizado un script para automatizar la ejecución.
+
+Los resultados obtenidos con este script han sido los utilizados para hacer uso de python y sus librerías matemáticas. A continuación, se van detallando los pasos que hemos seguido:
+
+\begin{itemize}
+
+\item Lo primero ha sido discriminar entre qué era mejor, si utilizar un selector de tipo Ruleta o uno de tipo Torneo. Los resultados han sido los siguientes:
+
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=0.5\textwidth]{img/datosRuleta.png}
+\end{center}
+\caption{Selector Ruleta}
+\label{fig:ruleta}
+\end{figure}
+
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=0.5\textwidth]{img/datosTorneo.png}
+\end{center}
+\caption{Selector Torneo}
+\label{fig:torneo}
+\end{figure}
+
+Como se puede comprobar, existe un mayor número de soluciones con el selector Torneo (\ref{fig:torneo}), por lo que elegiremos este como primera opción.
+
+\item Después tendríamos que comprobar qué tamaño de población es el idóneo, probamos con tamaños de 100 y 150. Los resultados han sido los siguientes:
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=0.5\textwidth]{img/pob100.png}
+\end{center}
+\caption{Población de 100 individuos}
+\label{fig:pob100}
+\end{figure}
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=0.5\textwidth]{img/pon150.png}
+\end{center}
+\caption{Población de 150 individuos}
+\label{fig:pob150}
+\end{figure}
+
+En esta ocasión se puede comprobar que existe un mayor número de soluciones para tamaños de población 150 (\ref{fig:pob150}), por lo que sería nuestra elección de cara a dar los parámetros más aptos.
+
+\item Lo siguiente sería comprobar para qué probabilidad de cruce se consigue mayores resultados. Las pruebas se han hecho con las probabilidades 0.8, 0.85, 0.9 y 9.95. Los resultados han sido los siguientes:
+
+
+\begin{figure}[t!]
+\begin{center}
+\includegraphics[width=0.5\textwidth]{img/cruce085.png}
+\end{center}
+\caption{Probabilidad de cruce 0.85}
+\label{fig:cruce085}
+\end{figure}
+
+\begin{figure}[t!]
+\begin{center}
+\includegraphics[width=0.5\textwidth]{img/cruce08.png}
+\end{center}
+\caption{Probabilidad de cruce 0.8}
+\label{fig:cruce08}
+\end{figure}
+
+\begin{figure}[t!]
+\begin{center}
+\includegraphics[width=0.5\textwidth]{img/cruce09.png}
+\end{center}
+\caption{Probabilidad de cruce 0.9}
+\label{fig:cruce09}
+\end{figure}
+
+\begin{figure}[t!]
+\begin{center}
+\includegraphics[width=0.5\textwidth]{img/cruce095.png}
+\end{center}
+\caption{Probabilidad de cruce 0.95}
+\label{fig:cruce095}
+\end{figure}
+
+Como puede verse, la probabilidad de cruce que mayor número de soluciones proporciona es 0.85 (\ref{fig:cruce085}), seguida de 0.8 (\ref{fig:cruce08}).
+
+\item Por último, lo único que habría que comprobar sería para qué probabilidad de mutación se consigue mayores resultados, junto con el resto de parámetros. Las probabilidades evaluadas han sido 0.01, 0.05, 0.1, 0.125, 0.15. Los resultados han sido los siguientes:
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=0.5\textwidth]{img/muta001.png}
+\end{center}
+\caption{Probabilidad de mutación 0.01}
+\label{fig:muta001}
+\end{figure}
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=0.5\textwidth]{img/muta005.png}
+\end{center}
+\caption{Probabilidad de mutación 0.05}
+\label{fig:muta005}
+\end{figure}
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=0.5\textwidth]{img/muta01.png}
+\end{center}
+\caption{Probabilidad de mutación 0.1}
+\label{fig:muta01}
+\end{figure}
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=0.5\textwidth]{img/muta0125.png}
+\end{center}
+\caption{Probabilidad de mutación 0.125}
+\label{fig:muta0125}
+\end{figure}
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=0.5\textwidth]{img/muta015.png}
+\end{center}
+\caption{Probabilidad de mutación 0.15}
+\label{fig:muta015}
+\end{figure}
+
+Como puede verse en las Figuras \ref{fig:muta01} y \ref{fig:muta0125}, las probabilidades que mayor número de soluciones proporcionan son 0.1 y 0.125.
+
+
+\end{itemize}
+
+\newpage
+\newpage
+\newpage
+\newpage
+
+Con todo esto, podemos concluir que nuestro sistema consigue resolver sudokus dando el resultado óptimo (0 repeticiones) con mayor frecuencia para los parámetros \emph{Selector Torneo}, \emph{Tamaño 150 de población}, \emph{Probabilidades de cruce 0.8 y 0.85} y \emph{Probabilidades de mutación de 0.1 y 0.125}.
+
+
+El análisis se ha llevado a cabo mediante los ficheros de salida que proporciona el programa, adaptándolos para una fácil gestión desde \emph{Python} y analizando la frecuencia de valores iguales a 0 (sin repeticiones) que se tenía. Para ello, hemos creado \emph{histogramas} gracias a la librería \emph{matplotlib}. Para poder realizar esto, hemos consultado estas páginas web \cite{hist} y \cite{fich}.
+
+\newpage
+
+\newpage
+
+\newpage
+
+\section{Conclusiones}\label{conc:conc}
+
+Pese a no haber tenido mucho tiempo y, con ello, no haber podido utilizar una mayor variedad de herramientas, ha sido interesante enfrentarse de nuevo a un nuevo lenguaje de programación y poder observar cómo sirve tanto para la programación de sistemas como estamos acostumbrados a utilizar, como para proporcionar una fuente matemática muy útil de cara al análisis de datos.
+
+He de reconocer que durante todo el tiempo que he estado indagando algo se repetía en mi cabeza, \emph{"Todo esto con R es mucho más fácil"}, pero creo que es solo cuestión de acostumbrarse y echarle horas, ya que Python reune dos mundos muy interesantes.
+
+\bibliographystyle{plain}
+\bibliography{referencias}
+
+\end{document}
